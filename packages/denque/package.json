@@ -1,0 +1,30 @@
+{
+  "name": "@redisn/denque",
+  "version": "0.0.0",
+  "description": "The fastest javascript implementation of a double-ended queue. Maintains compatibility with deque.",
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "keywords": [
+    "data-structure",
+    "data-structures",
+    "queue",
+    "double",
+    "end",
+    "ended",
+    "deque",
+    "denque",
+    "double-ended-queue"
+  ],
+  "scripts": {
+  },
+  "author": {
+    "name": "Mike Diarmid",
+    "url": "http://github.com/Salakar/"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "double-ended-queue": "^2.1.0-0"
+  }
+}

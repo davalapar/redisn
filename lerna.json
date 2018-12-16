@@ -6,11 +6,7 @@
     "--no-lockfile"
   ],
   "packages": [
-    "packages/client",
-    "packages/common/*",
-    "packages/connectors/*",
-    "packages/resp/*",
-    "packages/types/*"
+    "packages/*"
   ],
   "command": {
     "bootstrap": {

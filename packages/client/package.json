@@ -15,15 +15,14 @@
   "engines": {
     "node": ">=8"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
     "@redisn/utils": "0.0.0",
     "@redisn/denque": "0.0.0",
     "@redisn/cluster-key-slot": "0.0.0",
-    "@redisn/standalone-connector": "0.0.0",
-    "@redisn/cluster-connector": "0.0.0",
-    "@redisn/sentinel-connector": "0.0.0",
+    "@redisn/connector-standalone": "0.0.0",
+    "@redisn/connector-cluster": "0.0.0",
+    "@redisn/connector-sentinel": "0.0.0",
     "deeps": "^1.4.5"
   }
 }
