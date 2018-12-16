@@ -7,9 +7,9 @@ const {
   strings,
   eventSubscriptionWrapper,
   proxyThisAndThat,
-} = require('../../../common/utils/src');
+} = require('@redisn/utils');
 
-const Commander = require('../Commander/Commander');
+const Commander = require('../../../client/src/Commander/Commander');
 
 const {
   STATUS_CONNECTED,
@@ -64,15 +64,9 @@ module.exports = class Standalone {
     this.socket = new Socket();
 
     // cheap re-use of socket event emitter
-    this.on = eventSubscriptionWrapper(
-      this.socket,
-      this.socket.on.bind(this.socket),
-    );
+    this.on = eventSubscriptionWrapper(this.socket, this.socket.on.bind(this.socket));
 
-    this.once = eventSubscriptionWrapper(
-      this.socket,
-      this.socket.once.bind(this.socket),
-    );
+    this.once = eventSubscriptionWrapper(this.socket, this.socket.once.bind(this.socket));
 
     this.emit = this.socket.emit.bind(this.socket);
 
@@ -114,12 +108,8 @@ module.exports = class Standalone {
     this.socket.ref();
     this.status = STATUS_CONNECTING;
 
-    Internals.get(this).eventSubscriptions.push(
-      this.once('close', this._onClose),
-    );
-    Internals.get(this).eventSubscriptions.push(
-      this.once('connect', this._onConnect),
-    );
+    Internals.get(this).eventSubscriptions.push(this.once('close', this._onClose));
+    Internals.get(this).eventSubscriptions.push(this.once('connect', this._onConnect));
 
     if (this.options.tls) {
       tls.connect({ socket: this.socket, ...this.options });

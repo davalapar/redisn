@@ -1,4 +1,8 @@
 {
   "name": "@redisn/standalone-connector",
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@redisn/utils": "0.0.0"
+  }
 }

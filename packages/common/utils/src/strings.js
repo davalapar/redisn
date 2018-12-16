@@ -4,6 +4,5 @@ module.exports = {
   STATUS_DISCONNECTED: 'disconnected',
   STATUS_DISCONNECTING: 'disconnecting',
 
-  ERROR_ALREADY_CONNECTED:
-    'ABORT: Connector is already connecting or connected!',
+  ERROR_ALREADY_CONNECTED: 'ABORT: Connector is already connecting or connected!',
 };

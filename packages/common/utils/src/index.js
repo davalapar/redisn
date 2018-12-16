@@ -16,12 +16,10 @@ export type PendingPromiseType = {
 function promisePending(): PendingPromiseType {
   const deferred = {};
 
-  deferred.promise = new Promise(
-    (resolve: (?any) => any, reject: (?any) => any) => {
-      deferred.resolve = resolve;
-      deferred.reject = reject;
-    },
-  );
+  deferred.promise = new Promise((resolve: (?any) => any, reject: (?any) => any) => {
+    deferred.resolve = resolve;
+    deferred.reject = reject;
+  });
 
   return deferred;
 }
@@ -32,10 +30,7 @@ function promisePending(): PendingPromiseType {
  * @param subscribeFn
  * @returns {function(string, Function): function(): *}
  */
-function eventSubscriptionWrapper(
-  emitter: EventEmitter,
-  subscribeFn: Function,
-) {
+function eventSubscriptionWrapper(emitter: EventEmitter, subscribeFn: Function) {
   return function wrapper(event: string, fn: Function) {
     subscribeFn(event, fn);
     return () => emitter.removeListener(event, fn);

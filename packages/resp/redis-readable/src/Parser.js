@@ -4,7 +4,7 @@ const { Buffer } = require('buffer');
 const { StringDecoder } = require('string_decoder');
 
 const { ReplyError, ParserError } = require('./ParserErrors');
-const { defaults, merge } = require('../Utils');
+const { defaults, merge } = require('@redisn/utils');
 
 let counter = 0;
 let interval = null;
