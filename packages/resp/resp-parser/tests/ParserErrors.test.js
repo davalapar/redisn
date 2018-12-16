@@ -9,7 +9,7 @@ const {
   ParserError,
   AbortError,
   InterruptError,
-} = require('../../Parser/ParserErrors');
+} = require('./../src/ParserErrors');
 
 describe('errors', () => {
   const redisError = new RedisError('test');

@@ -1,7 +1,7 @@
 /* eslint-env jest */
 
 const StandaloneConnector = require('./../src/Connector');
-const Commander = require('../../../client/src/Commander/Commander');
+const Commander = require('../../../common/commander/src/Commander');
 
 const DEFAULT_OPTIONS = { host: '127.0.0.1', port: 6379 };
 

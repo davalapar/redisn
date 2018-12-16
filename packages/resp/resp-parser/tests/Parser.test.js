@@ -5,12 +5,8 @@ const util = require('util');
 const assert = require('assert');
 const { Buffer } = require('buffer');
 
-const Parser = require('../../Parser/Parser');
-const {
-  ReplyError,
-  RedisError,
-  ParserError,
-} = require('../../Parser/ParserErrors');
+const Parser = require('./../src/Parser');
+const { ReplyError, RedisError, ParserError } = require('./../src/ParserErrors');
 
 // Mock the not needed return functions
 function returnReply() {
@@ -33,9 +29,7 @@ function createBufferOfSize(parser, size, str) {
     'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
     'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ' +
     'ut aliquip ex ea commodo consequat. Duis aute irure dolor in'; // 256 chars
-  const bigStringArray = new Array(2 ** 16 / lorem.length)
-    .join(`${lorem} `)
-    .split(' '); // Math.pow(2, 16) chars long
+  const bigStringArray = new Array(2 ** 16 / lorem.length).join(`${lorem} `).split(' '); // Math.pow(2, 16) chars long
   const startBigBuffer = Buffer.from(`${str}$${size}\r\n`);
   const parts = size / 65536;
   const chunks = new Array(parts);
@@ -56,8 +50,7 @@ class ExtendedParser extends Parser {
     this._returnReply = this.options.returnReply || returnReply;
     this._returnError = this.options.returnError || returnError;
     this._returnFatalError =
-      this.options.returnFatalError ||
-      (noFatal ? this._returnError : returnFatalError);
+      this.options.returnFatalError || (noFatal ? this._returnError : returnFatalError);
   }
 }
 
@@ -136,16 +129,10 @@ describe('Parser', () => {
         replyCount++;
       }
       const parser = newParser(checkReply);
-      parser.execute(
-        Buffer.from('*0\r\n$0\r\n\r\n*6\r\n:\r\n$-1\r\n$0\r\n\r\n:-\r\n$'),
-      );
+      parser.execute(Buffer.from('*0\r\n$0\r\n\r\n*6\r\n:\r\n$-1\r\n$0\r\n\r\n:-\r\n$'));
       assert.strictEqual(replyCount, 2);
       parser.execute(
-        Buffer.from(
-          `\r\n\r\n*\r\n:9223372036854775\r\n$${Buffer.byteLength(
-            '☃',
-          )}\r\n☃\r\n`,
-        ),
+        Buffer.from(`\r\n\r\n*\r\n:9223372036854775\r\n$${Buffer.byteLength('☃')}\r\n☃\r\n`),
       );
       assert.strictEqual(replyCount, 5);
       parser.execute(Buffer.from('*3\r\n:1\r\n+OK\r\n$-1\r\n'));
@@ -261,11 +248,7 @@ describe('Parser', () => {
       function Abc() {}
       Abc.prototype.checkReply = function(reply) {
         assert.strictEqual(typeof this.log, 'function');
-        assert.deepEqual(
-          reply,
-          [['a']],
-          'Expecting multi-bulk reply of [["a"]]',
-        );
+        assert.deepEqual(reply, [['a']], 'Expecting multi-bulk reply of [["a"]]');
         replyCount++;
       };
       Abc.prototype.log = console.log;
@@ -286,37 +269,22 @@ describe('Parser', () => {
       parser.execute(Buffer.from('*1\r\n*1\r\n'));
       parser.execute(Buffer.from('$1\r\na\r\n'));
 
-      assert.strictEqual(
-        replyCount,
-        3,
-        'check reply should have been called three times',
-      );
+      assert.strictEqual(replyCount, 3, 'check reply should have been called three times');
     });
 
     test('parser error', () => {
       function Abc() {}
       Abc.prototype.checkReply = function(err) {
         assert.strictEqual(typeof this.log, 'function');
-        assert.strictEqual(
-          err.message,
-          'Protocol error, got "a" as reply type byte',
-        );
+        assert.strictEqual(err.message, 'Protocol error, got "a" as reply type byte');
         assert.strictEqual(err.name, 'ParserError');
         assert(err instanceof RedisError);
         assert(err instanceof ParserError);
         assert(err instanceof Error);
         assert(err.offset);
         assert(err.buffer);
-        assert(
-          /\[97,42,49,13,42,49,13,36,49,96,122,97,115,100,13,10,97]/.test(
-            err.buffer,
-          ),
-        );
-        assert(
-          /ParserError: Protocol error, got "a" as reply type byte/.test(
-            util.inspect(err),
-          ),
-        );
+        assert(/\[97,42,49,13,42,49,13,36,49,96,122,97,115,100,13,10,97]/.test(err.buffer));
+        assert(/ParserError: Protocol error, got "a" as reply type byte/.test(util.inspect(err)));
         replyCount++;
       };
       Abc.prototype.log = console.log;
@@ -340,10 +308,7 @@ describe('Parser', () => {
         replyCount++;
       }
       function checkError(err) {
-        assert.strictEqual(
-          err.message,
-          'Protocol error, got "b" as reply type byte',
-        );
+        assert.strictEqual(err.message, 'Protocol error, got "b" as reply type byte');
         errCount++;
       }
       const parser = newParser({
@@ -359,9 +324,7 @@ describe('Parser', () => {
       assert.strictEqual(errCount, 1);
       parser.execute(Buffer.from('*1\r\n+CCC\r\n'));
       assert.strictEqual(replyCount, 2);
-      parser.execute(
-        Buffer.from('-Protocol error, got "b" as reply type byte\r\n'),
-      );
+      parser.execute(Buffer.from('-Protocol error, got "b" as reply type byte\r\n'));
       assert.strictEqual(errCount, 2);
     });
 
@@ -372,10 +335,7 @@ describe('Parser', () => {
         replyCount++;
       }
       function checkError(err) {
-        assert.strictEqual(
-          err.message,
-          'Protocol error, got "\\n" as reply type byte',
-        );
+        assert.strictEqual(err.message, 'Protocol error, got "\\n" as reply type byte');
         errCount++;
       }
       const parser = newParser(
@@ -411,13 +371,9 @@ describe('Parser', () => {
       }
       const parser = newParser(checkReply);
 
-      parser.execute(
-        Buffer.from('$4\r\nfoo\r\r\n$8\r\nfoo\r\nbar\r\n$19\r\n\r\n'),
-      );
+      parser.execute(Buffer.from('$4\r\nfoo\r\r\n$8\r\nfoo\r\nbar\r\n$19\r\n\r\n'));
       parser.execute(Buffer.from([208, 161, 208, 176, 208, 189, 208]));
-      parser.execute(
-        Buffer.from([186, 209, 130, 45, 208, 159, 208, 181, 209, 130]),
-      );
+      parser.execute(Buffer.from([186, 209, 130, 45, 208, 159, 208, 181, 209, 130]));
       assert.strictEqual(replyCount, 2);
       parser.execute(Buffer.from('\r\n$5\r\nfoo\r\n\r\n'));
       assert.strictEqual(replyCount, 4);
@@ -437,11 +393,7 @@ describe('Parser', () => {
 
     test('line breaks in the beginning of the last chunk', () => {
       function checkReply(reply) {
-        assert.deepEqual(
-          reply,
-          [['a']],
-          'Expecting multi-bulk reply of [["a"]]',
-        );
+        assert.deepEqual(reply, [['a']], 'Expecting multi-bulk reply of [["a"]]');
         replyCount++;
       }
       const parser = newParser(checkReply);
@@ -453,11 +405,7 @@ describe('Parser', () => {
       assert.strictEqual(replyCount, 1);
       parser.execute(Buffer.from('\n$1\r\na\r\n*1\r\n*1\r\n$1\r\na\r\n'));
 
-      assert.strictEqual(
-        replyCount,
-        3,
-        'check reply should have been called three times',
-      );
+      assert.strictEqual(replyCount, 3, 'check reply should have been called three times');
     });
 
     test('multiple chunks in a bulk string', () => {
@@ -495,11 +443,7 @@ describe('Parser', () => {
       assert.strictEqual(replyCount, 3);
       parser.execute(Buffer.from('\n'));
 
-      assert.strictEqual(
-        replyCount,
-        4,
-        'check reply should have been called three times',
-      );
+      assert.strictEqual(replyCount, 4, 'check reply should have been called three times');
     });
 
     test('multiple chunks with arrays different types', () => {
@@ -658,9 +602,7 @@ describe('Parser', () => {
       const parser = newParser(checkReply);
       parser.execute(Buffer.from('$10\r\ntest '));
       assert.strictEqual(replyCount, 0);
-      parser.execute(
-        Buffer.from('test \r\n$20\r\ntest test test test \r\n:1234\r'),
-      );
+      parser.execute(Buffer.from('test \r\n$20\r\ntest test test test \r\n:1234\r'));
       assert.strictEqual(replyCount, 2);
       parser.execute(Buffer.from('\n'));
       assert.strictEqual(replyCount, 3);

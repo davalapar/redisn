@@ -1,4 +1,11 @@
 {
   "name": "@redisn/commander",
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@redisn/utils": "0.0.0",
+    "@redisn/denque": "0.0.0",
+    "@redisn/resp-writer": "0.0.0",
+    "@redisn/resp-parser": "0.0.0"
+  }
 }

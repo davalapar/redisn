@@ -1,5 +1,4 @@
-'use strict';
-
+/* eslint-disable no-var,vars-on-top,no-shadow,no-bitwise,prefer-template,operator-assignment */
 const cmdCache = {};
 const cmdCachePartial = {};
 
@@ -13,7 +12,7 @@ const functionArg = '$10\r\n[Function]\r\n';
 const objectArg = '$15\r\n[object Object]\r\n';
 
 /**
- * Faster for short strings less than 1024 in length.
+ * Faster for short strings less than 512 in length.
  * Larger strings use Buffer.byteLength()
  * Note: Purely for node 8. 9 + 10 are generally the same to use this or Buffer.byteLength
  * @param str
@@ -65,9 +64,10 @@ function cmdWritable(cmd) {
  * @returns {*}
  */
 function cmdPartial(cmd) {
-  return cmdCachePartial[cmd] || (cmdCachePartial[cmd] = '\r\n$' + cmd.length + newLine + cmd + newLine);
+  return (
+    cmdCachePartial[cmd] || (cmdCachePartial[cmd] = '\r\n$' + cmd.length + newLine + cmd + newLine)
+  );
 }
-
 
 /**
  * Convert an arg based on it's primitive type.
@@ -81,14 +81,14 @@ function argWritable(arg) {
     case 'boolean':
       return '$' + byteLength('' + arg) + newLine + arg + newLine;
     case 'number':
-      if (arg == 0) return zeroArg;
-      if (arg == 1) return oneArg;
+      if (arg === 0) return zeroArg;
+      if (arg === 1) return oneArg;
       return '$' + byteLength('' + arg) + newLine + arg + newLine;
     case 'undefined':
       return undefArg;
     case 'object':
       if (arg == null) return nullArg;
-      else return objectArg;
+      return objectArg;
     case 'function':
       return functionArg;
     case 'symbol':
@@ -110,7 +110,9 @@ function toWritable(cmd, args) {
     case 2:
       return '*3' + cmdPartial(cmd) + argWritable(args[0]) + argWritable(args[1]);
     case 3:
-      return '*4' + cmdPartial(cmd) + argWritable(args[0]) + argWritable(args[1]) + argWritable(args[2]);
+      return (
+        '*4' + cmdPartial(cmd) + argWritable(args[0]) + argWritable(args[1]) + argWritable(args[2])
+      );
     default:
       var i = 0;
       var l = args.length;

@@ -1,5 +1,6 @@
 const assert = require('assert');
 const { byteLength } = require('../');
+
 const largeStr = new Array(4096 + 1).join('-');
 
 const TEST_STRINGS = [
@@ -23,12 +24,14 @@ const TEST_STRINGS = [
   '𐀀',
 ];
 
-
 describe('byteLength', () => {
   it('should correctly return byte lengths', () => {
     for (let i = 0, len = TEST_STRINGS.length; i < len; i++) {
       const string = TEST_STRINGS[i];
-      assert(byteLength(string) === Buffer.byteLength(string, 'utf8'), `'${string}' incorrect byte length`);
+      assert(
+        byteLength(string) === Buffer.byteLength(string, 'utf8'),
+        `'${string}' incorrect byte length`,
+      );
     }
   });
 });

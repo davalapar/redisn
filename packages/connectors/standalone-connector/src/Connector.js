@@ -9,7 +9,7 @@ const {
   proxyThisAndThat,
 } = require('@redisn/utils');
 
-const Commander = require('../../../client/src/Commander/Commander');
+const Commander = require('@redisn/commander');
 
 const {
   STATUS_CONNECTED,

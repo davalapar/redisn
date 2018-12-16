@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/npm/l/redisn.svg)](/LICENSE)
 <a href="https://twitter.com/mikediarmid"><img src="https://img.shields.io/twitter/follow/mikediarmid.svg?style=social&label=Follow" alt="Follow on Twitter"></a>
 
-> A work in progress next generation of redis client for Node.js. A modern, ultra performant and feature rich implementation.
+> A work in progress next generation Redis client for Node.js. Modern, high-performing and feature rich.
 
 ## Planned Features
 
@@ -20,13 +20,13 @@
 ### Prefixing
 
 - [ ] String or Function key prefixing
-- [ ] String or Function pubsub event prefixing
+- [ ] String or Function PUBSUB event prefixing
 
 ### Extensibility
 
-- [ ] Build custom Hooks to extend/provide functionality
+- [ ] Build custom Hooks/Plugins to extend/provide functionality
 - [ ] Advanced custom LUA scripting functionality
-- [ ] Human friendly PUBSUB, losely based on node's Event Emitter API
+- [ ] Human friendly PUBSUB, loosely based on node's Event Emitter API
 
 `Features list is WIP. Make an issue for any other features you'd like to see.`
 

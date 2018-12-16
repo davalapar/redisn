@@ -1,10 +1,10 @@
-import type { PendingPromiseType } from '../../../common/utils/src';
+// TODO remove flow types (from first version of redisn)
+import type { PendingPromiseType } from '@redisn/utils';
 
-const Denque = require('denque');
-const toWritable = require('redis-writable');
-
-const Parser = require('../Parser/Parser');
-const { promisePending, strings } = require('../../../common/utils/src');
+const Denque = require('@redisn/denque');
+const Parser = require('@redisn/resp-parser');
+const toWritable = require('@redisn/resp-writer');
+const { promisePending, strings } = require('@redisn/utils');
 
 const { STATUS_CONNECTED } = strings;
 
@@ -24,6 +24,7 @@ const MAX_BUFFER_SIZE = 4 * 1024 * 1024; // ~4 mb
 
 class Commander extends Parser {
   _queue: CommandQueueType;
+
   _pending: () => PendingPromiseType;
 
   // TODO any options for commander or parser
