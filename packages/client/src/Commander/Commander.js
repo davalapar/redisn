@@ -1,10 +1,10 @@
-import type { PendingPromiseType } from '../Utils';
+import type { PendingPromiseType } from '../../../common/utils/src';
 
 const Denque = require('denque');
 const toWritable = require('redis-writable');
 
 const Parser = require('../Parser/Parser');
-const { promisePending, strings } = require('../Utils');
+const { promisePending, strings } = require('../../../common/utils/src');
 
 const { STATUS_CONNECTED } = strings;
 

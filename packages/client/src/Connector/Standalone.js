@@ -7,7 +7,7 @@ const {
   strings,
   eventSubscriptionWrapper,
   proxyThisAndThat,
-} = require('../Utils');
+} = require('../../../common/utils/src');
 
 const Commander = require('../Commander/Commander');
 

@@ -1,1 +1,16 @@
-{}
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": 8
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    "syntax-object-rest-spread",
+    "transform-class-properties"
+  ]
+}
