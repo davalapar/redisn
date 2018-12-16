@@ -1,0 +1,33 @@
+{
+  "root": true,
+  "extends": ["airbnb-base", "prettier", "prettier/flowtype"],
+  "plugins": ["flowtype", "prettier"],
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "shelljs": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-extend-native": 0,
+    "import/no-dynamic-require": 0,
+    "global-require": "off",
+    "class-methods-use-this": 0,
+    "no-console": 1,
+    "no-plusplus": 0,
+    "no-undef": 0,
+    "no-underscore-dangle": "off",
+    "no-use-before-define": 0,
+    "import/no-cycle": 1
+  },
+  "overrides": [
+    {
+      "files": ["packages/*/test/**/*.js", "test/**/*.js"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}

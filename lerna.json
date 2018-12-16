@@ -1,0 +1,25 @@
+{
+  "version": "0.0.0",
+  "useWorkspaces": true,
+  "npmClient": "yarn",
+  "npmClientArgs": [
+    "--no-lockfile"
+  ],
+  "packages": [
+    "packages/client",
+    "packages/common/*",
+    "packages/connectors/*",
+    "packages/resp/*",
+    "packages/types/*"
+  ],
+  "command": {
+    "bootstrap": {
+      "ignore": "*-template-*"
+    },
+    "publish": {
+      "ignoreChanges": [
+        "*.md"
+      ]
+    }
+  }
+}

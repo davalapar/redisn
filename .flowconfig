@@ -1,7 +1,42 @@
-[version]
-0.42.0
-
 [ignore]
-.*/node_modules/react-native
-.*/node_modules/fbjs/*
-.*/node_modules/jest-validate/*
+.*/__tests__/.*
+.*/packages/types/**/.*
+.*/packages/**/node_modules/**/.*
+
+[include]
+
+[lints]
+
+[libs]
+
+[options]
+emoji=true
+esproposal.optional_chaining=enable
+esproposal.nullish_coalescing=enable
+
+module.system=haste
+module.system.haste.use_name_reducers=true
+# get basename
+module.system.haste.name_reducers='^.*/\([a-zA-Z0-9$_.-]+\.js\(\.flow\)?\)$' -> '\1'
+# strip .js or .js.flow suffix
+module.system.haste.name_reducers='^\(.*\)\.js\(\.flow\)?$' -> '\1'
+module.system.haste.paths.blacklist=.*/__tests__/.*
+module.system.haste.paths.blacklist=.*/__mocks__/.*
+
+munge_underscores=true
+
+
+module.file_ext=.js
+module.file_ext=.json
+module.file_ext=.native.js
+
+suppress_type=$FlowIssue
+suppress_type=$FlowFixMe
+suppress_type=$FlowFixMeProps
+suppress_type=$FlowFixMeState
+
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
+suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
+
+[version]
+^0.80.0
