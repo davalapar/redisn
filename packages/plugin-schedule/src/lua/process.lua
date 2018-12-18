@@ -13,12 +13,12 @@
 
 
 --[[
--- Determines if this occurrence is valid and matches the current saved version hash
+ - Determines if this occurrence is valid and matches the current saved version hash
  - scheduleParsed
  - versionHash
  - name
  - time
- ]]
+]]
 local function isValidSchedule(scheduleParsed, versionHash, name, time)
   local enabled = scheduleParsed.enabled
   local scheduleVersionHash = scheduleParsed.versionHash
@@ -30,7 +30,7 @@ local function isValidSchedule(scheduleParsed, versionHash, name, time)
   -- only valid if schedule is enabled still
   -- and it's hash matches the hash at time of creating this occurrence
   if enabled and versionHash == scheduleVersionHash then
-    -- check this occurence is not > end timestamp
+    -- check this occurrence is not > end timestamp
     if runOnce or (nextTimestamp <= endTimestamp and nextTimestamp >= startsTimestamp) then
       return true
     else
@@ -91,7 +91,7 @@ local function process()
 
   redis.call('set', KEYS[5], ARGV[3], 'PX', tonumber(ARGV[2]))
   -- get occurrences that a ready to run based on timestamp
-  -- we slightly creep ahead a couple ms to ensure jubs are picked up on the dot
+  -- we slightly creep ahead a couple ms to ensure jobs are picked up on the dot
   -- or as close to it as possible
   local time = tonumber(ARGV[1])
   local occurrences = redis.call('zrangebyscore', KEYS[1], 0, time)
@@ -104,7 +104,7 @@ local function process()
 
   -- set lock to expire after half the interval time
   if redis.call('get', KEYS[5]) == ARGV[3] then
-    --  redis.debug('EXIRING KEY ' .. KEYS[5] .. ' with token ' .. ARGV[3])
+    --  redis.debug('EXPIRING KEY ' .. KEYS[5] .. ' with token ' .. ARGV[3])
     redis.call('pexpire', KEYS[5], tonumber(ARGV[4]) - 10)
   end
 
